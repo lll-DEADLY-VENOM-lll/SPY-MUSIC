@@ -16,7 +16,7 @@ from Spy.utils.database import (add_served_chat, add_served_user,
 from Spy.utils.decorators.language import LanguageStart
 from Spy.utils.formatters import get_readable_time
 # Line 19: Maine 'help_panel' (single n) kar diya hai
-from Spy.utils.inline import help_panel, private_panel, start_panel
+from Spy.utils.inline import first_page, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
@@ -162,3 +162,4 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
+

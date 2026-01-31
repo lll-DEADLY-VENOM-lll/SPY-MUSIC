@@ -15,12 +15,12 @@ from Spy.utils.database import (add_nonadmin_chat, get_authuser,
                                        remove_nonadmin_chat, set_playmode,
                                        set_playtype, set_upvotes, skip_off,
                                        skip_on)
-from spy.utils.decorators.admins import ActualAdminCB
-from spy.utils.decorators.language import language, languageCB
-from spy.utils.inline.settings import (auth_users_markup,
+from Spy.utils.decorators.admins import ActualAdminCB
+from Spy.utils.decorators.language import language, languageCB
+from Spy.utils.inline.settings import (auth_users_markup,
                                               playmode_users_markup,
                                               setting_markup, vote_mode_markup)
-from spy.utils.inline.start import private_panel
+from Spy.utils.inline.start import private_panel
 from config import BANNED_USERS, OWNER_ID
 
 

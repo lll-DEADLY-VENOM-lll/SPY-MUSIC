@@ -8,7 +8,7 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
 
 import config
 from Spy import app
-from spy.utils.database import (add_nonadmin_chat, get_authuser,
+from Spy.utils.database import (add_nonadmin_chat, get_authuser,
                                        get_authuser_names, get_playmode,
                                        get_playtype, get_upvote_count,
                                        is_nonadmin_chat, is_skipmode,

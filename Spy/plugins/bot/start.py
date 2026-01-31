@@ -15,8 +15,8 @@ from Spy.utils.database import (add_served_chat, add_served_user,
                                        is_banned_user, is_on_off)
 from Spy.utils.decorators.language import LanguageStart
 from Spy.utils.formatters import get_readable_time
-# Line 18: Yahan 'help_pannel' check karein
-from Spy.utils.inline import help_pannel, private_panel, start_panel
+# Line 19: Maine 'help_panel' (single n) kar diya hai
+from Spy.utils.inline import help_panel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
@@ -36,8 +36,8 @@ async def start_pm(client, message: Message, _):
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
-            # Line 36: Yahan spelling import se match honi chahiye
-            keyboard = help_pannel(_)
+            # Line 37: Yahan bhi 'help_panel' (single n) kar diya hai
+            keyboard = help_panel(_)
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 has_spoiler=True,

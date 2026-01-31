@@ -15,7 +15,7 @@ from Spy.utils.database import (add_served_chat, add_served_user,
                                        is_banned_user, is_on_off)
 from Spy.utils.decorators.language import LanguageStart
 from Spy.utils.formatters import get_readable_time
-from Spy.utils.inline import help_pannel, private_panel, start_panel
+from Spy.utils.inline import help_panel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
@@ -160,5 +160,6 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
+
 
 

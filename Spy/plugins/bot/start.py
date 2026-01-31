@@ -37,7 +37,7 @@ async def start_pm(client, message: Message, _):
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             # Line 37: Yahan bhi 'help_panel' (single n) kar diya hai
-            keyboard = help_panel(_)
+            keyboard = first_page(_)
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 has_spoiler=True,
@@ -162,4 +162,5 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
+
 

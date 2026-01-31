@@ -24,13 +24,10 @@ def private_panel(_):
                 url=f"https://t.me/{app.username}?startgroup=true",
             )
         ],
+        [
+            InlineKeyboardButton(text=_["S_B_2"], callback_data="shiv_aarumi"),
+            InlineKeyboardButton(text="💌 ʏᴛ-ᴀᴘɪ", callback_data="bot_info_data"),
+        ],
         [InlineKeyboardButton(text=_["S_B_4"], callback_data="settings_back_helper")],
-        [
-            InlineKeyboardButton(text=_["S_B_2"], callback_data="dil_spy"),
-            InlineKeyboardButton(text=_["S_B_7"], callback_data="gib_source"),
-        ],
-        [
-            InlineKeyboardButton("• ʙᴏᴛ ɪɴғᴏ •", callback_data="bot_info_data"),
-        ],
     ]
     return buttons

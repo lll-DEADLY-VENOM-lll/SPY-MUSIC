@@ -1,4 +1,4 @@
-tfrom pyrogram import Client
+from pyrogram import Client
 import config
 from ..logging import LOGGER
 

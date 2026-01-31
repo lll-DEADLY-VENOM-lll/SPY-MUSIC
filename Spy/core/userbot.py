@@ -1,4 +1,4 @@
-from pyrogram import Client
+tfrom pyrogram import Client
 import config
 from ..logging import LOGGER
 
@@ -45,7 +45,7 @@ class Userbot(Client):
                     
                     # Support Chat Join Karna
                     try:
-                        await client.join_chat("Dil_Feelings_Will1")
+                        await client.join_chat("NOBITA_SUPPORT")
                     except Exception:
                         pass
                     

@@ -1,10 +1,7 @@
 from pyrogram import Client, errors
 from pyrogram.enums import ChatMemberStatus, ParseMode
-
 import config
-
 from ..logging import LOGGER
-
 
 class Sagar(Client):
     def __init__(self):
@@ -25,14 +22,25 @@ class Sagar(Client):
         self.username = self.me.username
         self.mention = self.me.mention
 
+        # LOGGER_ID ko integer mein convert karne ki koshish (ValueError se bachne ke liye)
+        try:
+            if config.LOGGER_ID:
+                log_id = int(config.LOGGER_ID)
+            else:
+                LOGGER(__name__).error("LOGGER_ID config file mein nahi mila.")
+                exit()
+        except ValueError:
+            LOGGER(__name__).error("LOGGER_ID galat hai! Ye sirf numbers (integer) hona chahiye aur -100 se shuru hona chahiye.")
+            exit()
+
         try:
             await self.send_message(
-                chat_id=config.LOGGER_ID,
-                text=f"<u><b>» {self.mention} ʙᴏᴛ sᴛᴀʀᴛᴇᴅ :</b><u>\n\nɪᴅ : <code>{self.id}</code>\nɴᴀᴍᴇ : {self.name}\nᴜsᴇʀɴᴀᴍᴇ : @{self.username}",
+                chat_id=log_id,
+                text=f"<u><b>» {self.mention} ʙᴏᴛ sᴛᴀʀᴛᴇᴅ :</b></u>\n\nɪᴅ : <code>{self.id}</code>\nɴᴀᴍᴇ : {self.name}\nᴜsᴇʀɴᴀᴍᴇ : @{self.username}",
             )
         except (errors.ChannelInvalid, errors.PeerIdInvalid):
             LOGGER(__name__).error(
-                "Bot has failed to access the log group/channel. Make sure that you have added your bot to your log group/channel."
+                "Bot log group tak nahi pahunch pa raha. Check karein ki aapne Bot ko Log Group mein add kiya hai ya nahi."
             )
             exit()
         except Exception as ex:
@@ -41,13 +49,20 @@ class Sagar(Client):
             )
             exit()
 
-        a = await self.get_chat_member(config.LOGGER_ID, self.id)
-        if a.status != ChatMemberStatus.ADMINISTRATOR:
-            LOGGER(__name__).error(
-                "Please promote your bot as an admin in your log group/channel."
-            )
+        # Check Admin Status
+        try:
+            a = await self.get_chat_member(log_id, self.id)
+            if a.status != ChatMemberStatus.ADMINISTRATOR:
+                LOGGER(__name__).error(
+                    "Bot ko Log Group mein ADMIN banayein!"
+                )
+                exit()
+        except Exception as e:
+            LOGGER(__name__).error(f"Admin status check karne mein galti: {e}")
             exit()
+
         LOGGER(__name__).info(f"Music Bot Started as {self.name}")
 
     async def stop(self):
         await super().stop()
+        LOGGER(__name__).info("Bot stopped.")

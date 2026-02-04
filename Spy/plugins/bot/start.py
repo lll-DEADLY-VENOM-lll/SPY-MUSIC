@@ -19,13 +19,20 @@ from Spy.utils.inline import first_page, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-# Effect IDs ko hata diya gaya hai kyunki purana Pyrogram ise support nahi karta
+# Effect IDs ko rehne de sakte hain, par abhi use nahi honge crash se bachne ke liye
+EFFECT_ID = [
+    5046509860389126442,
+    5107584321108051014,
+    5104841245755180586,
+    5159385139981059251,
+]
+
+
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    
-    # Reaction feature ko try-except mein rakha hai taaki crash na ho
+    # Message reaction feature agar error de toh isse bhi hata sakte hain
     try:
         await message.react("🍓")
     except:
@@ -37,6 +44,7 @@ async def start_pm(client, message: Message, _):
             keyboard = first_page(_)
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
+                has_spoiler=True,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
@@ -77,6 +85,7 @@ async def start_pm(client, message: Message, _):
             await app.send_photo(
                 chat_id=message.chat.id,
                 photo=thumbnail,
+                has_spoiler=True,
                 caption=searched_text,
                 reply_markup=key,
             )
@@ -87,9 +96,10 @@ async def start_pm(client, message: Message, _):
                 )
     else:
         out = private_panel(_)
-        # FIXED: message_effect_id hata diya gaya hai
+        # FIX: 'message_effect_id' line ko hata diya gaya hai crash fix karne ke liye
         await message.reply_photo(
             photo=config.START_IMG_URL,
+            has_spoiler=True,
             caption=_["start_2"].format(message.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(out),
         )
@@ -107,6 +117,7 @@ async def start_gp(client, message: Message, _):
     uptime = int(time.time() - _boot_)
     await message.reply_photo(
         photo=config.START_IMG_URL,
+        has_spoiler=True,
         caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
         reply_markup=InlineKeyboardMarkup(out),
     )
@@ -142,6 +153,7 @@ async def welcome(client, message: Message):
                 out = start_panel(_)
                 await message.reply_photo(
                     photo=config.START_IMG_URL,
+                    has_spoiler=True,
                     caption=_["start_3"].format(
                         message.from_user.first_name,
                         app.mention,
@@ -153,4 +165,4 @@ async def welcome(client, message: Message):
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
         except Exception as ex:
-            print(f"Error in welcome: {ex}")
+            print(ex)

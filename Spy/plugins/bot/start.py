@@ -15,11 +15,11 @@ from Spy.utils.database import (add_served_chat, add_served_user,
                                        is_banned_user, is_on_off)
 from Spy.utils.decorators.language import LanguageStart
 from Spy.utils.formatters import get_readable_time
-# Line 19: Maine 'help_panel' (single n) kar diya hai
 from Spy.utils.inline import first_page, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
+# Effect IDs ko rehne de sakte hain, par abhi use nahi honge crash se bachne ke liye
 EFFECT_ID = [
     5046509860389126442,
     5107584321108051014,
@@ -32,11 +32,15 @@ EFFECT_ID = [
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    await message.react("🍓")
+    # Message reaction feature agar error de toh isse bhi hata sakte hain
+    try:
+        await message.react("🍓")
+    except:
+        pass
+
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
-            # Line 37: Yahan bhi 'help_panel' (single n) kar diya hai
             keyboard = first_page(_)
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
@@ -92,10 +96,10 @@ async def start_pm(client, message: Message, _):
                 )
     else:
         out = private_panel(_)
+        # FIX: 'message_effect_id' line ko hata diya gaya hai crash fix karne ke liye
         await message.reply_photo(
             photo=config.START_IMG_URL,
             has_spoiler=True,
-            message_effect_id=random.choice(EFFECT_ID),
             caption=_["start_2"].format(message.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(out),
         )
@@ -162,5 +166,3 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
-
-

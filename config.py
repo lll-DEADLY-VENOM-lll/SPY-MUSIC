@@ -32,8 +32,8 @@ UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/stkeditz/SpyMusic")
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "SPY")
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/hackarp13x")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/bihari_music")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/about_deadly_venom")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/NOBITA_SUPPORT")
 
 # --------------------------
 #    DURATION & LIMITS

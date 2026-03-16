@@ -51,7 +51,7 @@ async def helper_private_elite(client: app, update: Union[types.Message, types.C
     # Adding a Premium "VIP" Row at the top
     if hasattr(keyboard, 'inline_keyboard'):
         keyboard.inline_keyboard.insert(0, [
-            InlineKeyboardButton("👑 ᴠɪᴘ ᴀᴄᴄᴇss 👑", url=f"https://t.me/Official_Dil")
+            InlineKeyboardButton("༗🪈।। राधे राधे ❤️।।🦚🪈꯭᭕ᬁ꯭𝅦𝅦", url=f"https://t.me/about_deadly_venom")
         ])
 
     if is_cb:
@@ -90,7 +90,7 @@ async def helper_cb_elite(client, CallbackQuery, _):
             f"{DV}\n"
             f"{content}\n"
             f"{DV}\n"
-            f"✨ **ᴘᴏᴡᴇʀᴇᴅ ʙʏ:** @Official_Dil"
+            f"✨ **ᴘᴏᴡᴇʀᴇᴅ ʙʏ:** @KIRU_OP"
         )
         try:
             await CallbackQuery.edit_message_text(final_text, reply_markup=keyboard)

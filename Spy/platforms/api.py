@@ -7,7 +7,7 @@ import aiofiles
 from urllib.parse import quote_plus
 from dataclasses import dataclass
 from typing import Optional
-from kiru import app, logger  # Aapke bot/app ke instances
+from Sagar import app, logger  # Aapke bot/app ke instances
 
 # --- Configuration & Patterns ---
 TG_LINK_PATTERN = re.compile(r"https?://t\.me/(?:c/)?([^/]+)/(\d+)")

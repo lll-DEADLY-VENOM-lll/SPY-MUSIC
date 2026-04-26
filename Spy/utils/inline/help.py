@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Kiru <Kiru_OP>
+ # Copyright (c) 2026 Kiru <Kiru_OP>
 # Location: Varanasi, Uttar Pradesh, India
 #
 # All rights reserved.
@@ -21,30 +21,107 @@
 # Email: np564605@gmail.com
 
 from typing import Union
-
 from pyrogram import filters, types
-from pyrogram.types import InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from Spy import app
 from Spy.utils.database import get_lang
 from Spy.utils.decorators.language import LanguageStart, languageCB
-from Spy.utils.inline.help import (
-    help_back_markup,
-    private_help_panel,
-    help_pannel_page1,
-    help_pannel_page2,
-    help_pannel_page3,
-    help_pannel_page4,
-)
 from config import BANNED_USERS, START_IMG_URL, SUPPORT_CHAT
 from strings import get_string, helpers
 
+# ──────────────────────────────────────────────────────────────
+# 1. KEYBOARD MARKUPS (Buttons Definition)
+# ──────────────────────────────────────────────────────────────
+
+def help_pannel_page1(_, is_callback=False):
+    buttons = [
+        [
+            InlineKeyboardButton(text="Aᴅᴍɪɴ", callback_data="help_callback hb1"),
+            InlineKeyboardButton(text="Aᴜᴛʜ", callback_data="help_callback hb2"),
+            InlineKeyboardButton(text="Bʟᴀᴄᴋʟɪsᴛ", callback_data="help_callback hb3"),
+        ],
+        [
+            InlineKeyboardButton(text="Bʀᴏᴀᴅᴄᴀsᴛ", callback_data="help_callback hb4"),
+            InlineKeyboardButton(text="G-Bᴀɴ", callback_data="help_callback hb12"),
+            InlineKeyboardButton(text="Lʏʀɪᴄs", callback_data="help_callback hb5"),
+        ],
+        [
+            InlineKeyboardButton(text="Pʟᴀʏɪɴɢ", callback_data="help_callback hb6"),
+            InlineKeyboardButton(text="Pʟᴀʏʟɪsᴛ", callback_data="help_callback hb7"),
+            InlineKeyboardButton(text="Vɪᴅᴇᴏ-Cʜᴀᴛ", callback_data="help_callback hb8"),
+        ],
+        [
+            InlineKeyboardButton(text="Sᴛᴀᴛs", callback_data="help_callback hb9"),
+            InlineKeyboardButton(text="Sᴜᴅᴏ", callback_data="help_callback hb10"),
+            InlineKeyboardButton(text="Sᴛᴀʀᴛ", callback_data="help_callback hb11"),
+        ],
+        [
+            InlineKeyboardButton(text="➡", callback_data="help_page_2"),
+        ],
+    ]
+    return InlineKeyboardMarkup(buttons)
+
+def help_pannel_page2(_):
+    buttons = [
+        [
+            InlineKeyboardButton(text="Mᴜᴛᴇ", callback_data="help_callback hb13"),
+            InlineKeyboardButton(text="Pᴀᴜsᴇ", callback_data="help_callback hb14"),
+            InlineKeyboardButton(text="Rᴇsᴜᴍᴇ", callback_data="help_callback hb15"),
+        ],
+        [
+            InlineKeyboardButton(text="Sᴋɪᴘ", callback_data="help_callback hb16"),
+            InlineKeyboardButton(text="Sᴛᴏᴘ", callback_data="help_callback hb17"),
+            InlineKeyboardButton(text="Pɪɴɢ", callback_data="help_callback hb18"),
+        ],
+        [
+            InlineKeyboardButton(text="⬅", callback_data="help_page_1"),
+            InlineKeyboardButton(text="➡", callback_data="help_page_3"),
+        ],
+    ]
+    return InlineKeyboardMarkup(buttons)
+
+def help_pannel_page3(_):
+    buttons = [
+        [
+            InlineKeyboardButton(text="Exᴛʀᴀ", callback_data="help_callback hb22"),
+            InlineKeyboardButton(text="Gʀᴏᴜᴘ", callback_data="help_callback hb23"),
+        ],
+        [
+            InlineKeyboardButton(text="⬅", callback_data="help_page_2"),
+            InlineKeyboardButton(text="➡", callback_data="help_page_4"),
+        ],
+    ]
+    return InlineKeyboardMarkup(buttons)
+
+def help_pannel_page4(_):
+    buttons = [
+        [
+            InlineKeyboardButton(text="Tᴏᴏʟs", callback_data="help_callback hb32"),
+            InlineKeyboardButton(text="Aᴅᴠᴀɴᴄᴇᴅ", callback_data="help_callback hb33"),
+        ],
+        [
+            InlineKeyboardButton(text="⬅", callback_data="help_page_3"),
+        ],
+    ]
+    return InlineKeyboardMarkup(buttons)
+
+def help_back_markup(_, page=1):
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="⬅ Bᴀᴄᴋ", callback_data=f"help_page_{page}")]]
+    )
+
+def private_help_panel(_):
+    return [[InlineKeyboardButton(text="Hᴇʟᴘ", callback_data="help_page_1")]]
+
+
+# ──────────────────────────────────────────────────────────────
+# 2. HANDLERS (Commands and Callbacks)
+# ──────────────────────────────────────────────────────────────
 
 @app.on_message(filters.command(["help"]) & filters.private & ~BANNED_USERS)
 @app.on_callback_query(filters.regex("help_page_1") & ~BANNED_USERS)
-async def helper_private(
-    client: app, update: Union[types.Message, types.CallbackQuery]
-):
+async def helper_private(client: app, update: Union[types.Message, types.CallbackQuery]):
     is_callback = isinstance(update, types.CallbackQuery)
     if is_callback:
         try:
@@ -54,7 +131,6 @@ async def helper_private(
         chat_id = update.message.chat.id
         language = await get_lang(chat_id)
         _ = get_string(language)
-        # Using Page 1 logic from your Srishti style
         keyboard = help_pannel_page1(_, True)
         await update.edit_message_text(
             _["help_1"].format(SUPPORT_CHAT), reply_markup=keyboard
@@ -87,37 +163,29 @@ async def helper_cb(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
 
-    # Helper function matching your Srishti Music logic
     def get_keyboard_for(cb_id):
         page1 = ["hb1", "hb2", "hb3", "hb4", "hb5", "hb6", "hb7", "hb8", "hb9", "hb10"]
         page2 = ["hb11", "hb12", "hb13", "hb14", "hb15", "hb16", "hb17", "hb18", "hb19", "hb20", "hb21"]
         page3 = ["hb22", "hb23", "hb24", "hb25", "hb26", "hb27", "hb28", "hb29", "hb30", "hb31"]
-        page4 = ["hb32", "hb33", "hb34", "hb35", "hb36", "hb37", "hb38", "hb39"]
-
+        
         if cb_id in page1:
             return help_back_markup(_, page=1)
         elif cb_id in page2:
             return help_back_markup(_, page=2)
         elif cb_id in page3:
             return help_back_markup(_, page=3)
-        elif cb_id in page4:
-            return help_back_markup(_, page=4)
         else:
-            return help_back_markup(_, page=1)
+            return help_back_markup(_, page=4)
 
-    # Dynamic help content fetcher (optimized version of hb1...hb39)
     help_num = cb.replace("hb", "")
     content = getattr(helpers, f"HELP_{help_num}", None)
 
     if content:
-        await CallbackQuery.edit_message_text(
-            content, 
-            reply_markup=get_keyboard_for(cb)
-        )
+        await CallbackQuery.edit_message_text(content, reply_markup=get_keyboard_for(cb))
     else:
         await CallbackQuery.answer("⚠️ Help Module Not Found!", show_alert=True)
 
-# Navigation for Pages 2, 3, and 4
+
 @app.on_callback_query(filters.regex(pattern=r"help_page_(2|3|4)") & ~BANNED_USERS)
 @languageCB
 async def nav_handler(client, CallbackQuery, _):
@@ -135,7 +203,6 @@ async def nav_handler(client, CallbackQuery, _):
         await CallbackQuery.edit_message_reply_markup(reply_markup=keyboard)
     except:
         pass
-
 
 # ╔══════════════════════════════════════╗
 #        ©️ 2026 𝙆𝙞𝙧𝙪 𝙎𝙖𝙣𝙖𝙩𝙖𝙣𝙞 (@Kiru_OP)

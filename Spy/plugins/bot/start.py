@@ -3,7 +3,7 @@ import time
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from py_yt import VideosSearch
+from youtubesearchpython.__future__ import VideosSearch
 import config
 from Spy import app
 from Spy.misc import _boot_

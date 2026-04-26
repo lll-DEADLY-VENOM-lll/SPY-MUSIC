@@ -24,10 +24,7 @@ from Spy.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 
 
-EMOJII = ["🔥", "💋", "🥺", "😒", "💖",
-          "💘", "💕", "✨", "🧪", "🥰",
-          "🚩", "🍌", "🫦", "💔", "🦠",
-          "😓", "🫧"]
+EMOJII = ["🔍"]
 
 @app.on_message(
     filters.command(
